@@ -10,7 +10,7 @@
         }
         else
         {
-            <text>Hello, @context.User.Identity.Name!</text>
+            <text>Hello, @context.User.Claims.FirstOrDefault(t => t.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname").Value!</text>
         }
         <a href="MicrosoftIdentity/Account/SignOut">Log out</a>
     </Authorized>
