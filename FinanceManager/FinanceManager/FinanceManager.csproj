@@ -14,7 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FinanceManager.API\FinanceManager.API\FinanceManager.Data\FinanceManager.Models.csproj" />
+    <ProjectReference Include="..\..\..\FinanceManager.API\FinanceManager.API\FinanceManager.Data\FinanceManager.Models.csproj">
+      <Private>true</Private>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
