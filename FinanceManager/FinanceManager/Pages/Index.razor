@@ -1,9 +1,28 @@
 ﻿@page "/"
 
-    <h1 class="text-center">Household</h1>
+@inject HouseholdService HouseholdService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
 
-    <hr />
+<h1 class="text-center">Household</h1>
 
-    <div class="text-right">
-        <a href="people/new" class="btn btn-dark shadow-sm"><span class="oi oi-plus" aria-hidden="true"></span> Add Person</a>
-    </div>
+<hr />
+
+<div class="text-right">
+    <a href="people/new" class="btn btn-dark shadow-sm"><span class="oi oi-plus" aria-hidden="true"></span> Add Person</a>
+</div>
+
+@code {
+    private Models.Household household;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        string userId = UserHelpers.GetUserId(authState);
+
+        var household = await HouseholdService.GetHouseholdAsync(userId);
+
+        if (household is null)
+            NavigationManager.NavigateTo("household/new");
+    }
+}
