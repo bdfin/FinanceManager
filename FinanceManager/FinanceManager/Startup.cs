@@ -1,3 +1,4 @@
+using FinanceManager.Services;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using System;
 
 namespace FinanceManager
 {
@@ -33,6 +35,12 @@ namespace FinanceManager
             services.AddRazorPages();
             services.AddServerSideBlazor()
                 .AddMicrosoftIdentityConsentHandler();
+
+            services.AddHttpClient<HouseholdService>(client =>
+            {
+                client.BaseAddress = new Uri("https://finance-manager-api.azure-api.net");
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", Configuration["WebApiSubscriptionKey"]);
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
